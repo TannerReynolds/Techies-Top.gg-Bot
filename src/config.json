@@ -1,0 +1,7 @@
+  
+{
+    "port": 9786,
+    "discordToken": "Discord bot token",
+    "discordAdminIDs": ["author ID", "array"],
+    "prefix": "prefix goes here"
+  }
