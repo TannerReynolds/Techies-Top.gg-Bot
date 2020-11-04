@@ -65,7 +65,8 @@ class TechiesBot {
         // Begin server
         this.startServer();
 
-        scheduler.scheduleJob('removeVoter', '0 0 * * *', () => {
+        //scheduler.scheduleJob('removeVoter', '0 0 * * *', () => {
+        setTimeout(() => {
             let currentVoters = this.db.get('voters').value();
             for (let i = 0; i < currentVoters.length; i++) {
                 let currentDate = new Date(this.currentDate());
@@ -79,11 +80,13 @@ class TechiesBot {
                     let allRoles = this.db.get('roles').value();
                     g.removeMemberRole(currentVoters[i].id, voterRole.id).catch(e => { return });
                     for (let u = 0; u < allRoles.length; u++) {
-                        g.removeMemberRole(currentVoters[i].id, allRoles[i].id).catch(e => { return })
+                        let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
+                        g.removeMemberRole(currentVoters[i].id, allRoles[u].id).catch(e => { return });
                     }
                 }
             }
-        })
+        //})
+        }, 5000)
     }
 
     /** Booting up the Discord Bot
@@ -128,7 +131,7 @@ class TechiesBot {
         });
     }
 
-    async currentDate() {
+    currentDate() {
         const date = new Date();
         const day = date.getDay() + 1;
         const month = date.getMonth() + 1;
