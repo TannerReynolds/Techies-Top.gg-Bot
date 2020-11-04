@@ -65,8 +65,8 @@ class TechiesBot {
         // Begin server
         this.startServer();
 
-        //scheduler.scheduleJob('removeVoter', '0 0 * * *', () => {
-            setTimeout(() => {
+            scheduler.scheduleJob('removeVoter', '0 0 * * *', () => {
+            //setTimeout(() => {
                 let currentVoters = this.db.get('voters').value();
                 let interval = 750;
                 let promise = Promise.resolve();
@@ -111,8 +111,8 @@ class TechiesBot {
                         });
                     });
                 });
-                //})
-            }, 5000)
+            })
+            //}, 5000)
     }
 
     /** Booting up the Discord Bot
