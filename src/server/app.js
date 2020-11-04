@@ -74,7 +74,6 @@ class TechiesBot {
                 let timeDifference = Math.abs(currentDate.getTime() - voterDate.getTime());
                 let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
                 if(differentDays > 3) {
-                    this.db.get('voters').remove({id: currentVoters[i].id}).write();
                     let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
                     let voterRole = this.db.get('voterRole').value();
                     let allRoles = this.db.get('roles').value();
@@ -83,6 +82,7 @@ class TechiesBot {
                         let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
                         g.removeMemberRole(currentVoters[i].id, allRoles[u].id).catch(e => { return });
                     }
+                    setTimeout(() => { this.db.get('voters').remove({id: currentVoters[i].id}).write(); }, 3000);
                 }
             }
         //})
