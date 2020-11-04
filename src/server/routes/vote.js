@@ -1,6 +1,6 @@
 async function vote(req, res) {
-    const givenAuth = req.headers.authorization
-    const givenUser = "478044823882825748"    // CHANGE THIS WHEN YOU'RE DONE TESTING YOU RETARD
+    const givenAuth = req.headers.authorization;
+    const givenUser = req.body.user;
     if(givenAuth !== this.c.authToken || !givenUser) return;
 
     this.db.get('voters').push({id: givenUser, date: currentDate()}).write();
