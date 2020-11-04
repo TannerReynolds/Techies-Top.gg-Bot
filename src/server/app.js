@@ -66,27 +66,53 @@ class TechiesBot {
         this.startServer();
 
         //scheduler.scheduleJob('removeVoter', '0 0 * * *', () => {
-        setTimeout(() => {
-            let currentVoters = this.db.get('voters').value();
-            for (let i = 0; i < currentVoters.length; i++) {
-                let currentDate = new Date(this.currentDate());
-                let voterDate = new Date(currentVoters[i].date);
-                let timeDifference = Math.abs(currentDate.getTime() - voterDate.getTime());
-                let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-                if(differentDays > 3) {
-                    let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
-                    let voterRole = this.db.get('voterRole').value();
-                    let allRoles = this.db.get('roles').value();
-                    g.removeMemberRole(currentVoters[i].id, voterRole.id).catch(e => { return });
-                    for (let u = 0; u < allRoles.length; u++) {
-                        let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
-                        g.removeMemberRole(currentVoters[i].id, allRoles[u].id).catch(e => { return });
-                    }
-                    setTimeout(() => { this.db.get('voters').remove({id: currentVoters[i].id}).write(); }, 3000);
-                }
-            }
-        //})
-        }, 5000)
+            setTimeout(() => {
+                let currentVoters = this.db.get('voters').value();
+                let interval = 750;
+                let promise = Promise.resolve();
+                currentVoters.forEach(v => {
+                    promise = promise.then(() => {
+                        let currentDate = new Date(this.currentDate());
+                        let voterDate = new Date(v.date);
+                        let timeDifference = Math.abs(currentDate.getTime() - voterDate.getTime());
+                        let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                        if (differentDays > 3) {
+                            let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
+                            let voterRole = this.db.get('voterRole').value();
+                            let allRoles = this.db.get('roles').value();
+                            g.removeMemberRole(v.id, voterRole.id).catch(e => {
+                                return
+                            });
+                            for (let u = 0; u < allRoles.length; u++) {
+                                g.removeMemberRole(v.id, allRoles[u].id).catch(e => {
+                                    return
+                                });
+                            }
+                            let laterInterval = 750;
+                            let laterPromise = Promise.resolve();
+                            allRoles.forEach(r => {
+                                laterPromise = laterPromise.then(() => {
+                                    g.removeMemberRole(v.id, r.id).catch(e => {
+                                        return
+                                    });
+                                    return new Promise(resolve => {
+                                        setTimeout(resolve, laterInterval);
+                                    });
+                                })
+                            })
+                            setTimeout(() => {
+                                this.db.get('voters').remove({
+                                    id: v.id
+                                }).write();
+                            }, 3000);
+                        }
+                        return new Promise(resolve => {
+                            setTimeout(resolve, interval);
+                        });
+                    });
+                });
+                //})
+            }, 5000)
     }
 
     /** Booting up the Discord Bot
