@@ -18,6 +18,8 @@ const adapter = new FileSync('db.json');
 const db = low(adapter);
 const helmet = require('helmet');
 
+const scheduler = require('node-schedule');
+
 /** Express Webserver Class */
 class TechiesBot {
     /**
@@ -31,7 +33,8 @@ class TechiesBot {
             voters: [],
             bans: [],
             roles: [],
-            voterRole: {}
+            voterRole: {},
+            voterCount: []
         })
             .write();
         /** Defintions */
@@ -61,6 +64,26 @@ class TechiesBot {
 
         // Begin server
         this.startServer();
+
+        scheduler.scheduleJob('removeVoter', '0 0 * * *', () => {
+            let currentVoters = this.db.get('voters').value();
+            for (let i = 0; i < currentVoters.length; i++) {
+                let currentDate = new Date(this.currentDate());
+                let voterDate = new Date(currentVoters[i].date);
+                let timeDifference = Math.abs(currentDate.getTime() - voterDate.getTime());
+                let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                if(differentDays > 3) {
+                    this.db.get('voters').remove({id: currentVoters[i].id}).write();
+                    let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
+                    let voterRole = this.db.get('voterRole').value();
+                    let allRoles = this.db.get('roles').value();
+                    g.removeMemberRole(currentVoters[i].id, voterRole.id).catch(e => { return });
+                    for (let u = 0; u < allRoles.length; u++) {
+                        g.removeMemberRole(currentVoters[i].id, allRoles[i].id).catch(e => { return })
+                    }
+                }
+            }
+        })
     }
 
     /** Booting up the Discord Bot
@@ -103,6 +126,14 @@ class TechiesBot {
         this.app.listen(this.c.port, '0.0.0.0', () => {
             this.log.success(`Server listening on port ${this.c.port}`);
         });
+    }
+
+    async currentDate() {
+        const date = new Date();
+        const day = date.getDay() + 1;
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
     }
 }
 

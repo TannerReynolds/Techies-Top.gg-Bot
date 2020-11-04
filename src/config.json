@@ -3,5 +3,7 @@
     "port": 9786,
     "discordToken": "Discord bot token",
     "discordAdminIDs": ["author ID", "array"],
-    "prefix": "prefix goes here"
+    "prefix": "prefix goes here",
+    "authToken": "top.gg webhook authentication token",
+    "guildID": "id of guild"
   }
