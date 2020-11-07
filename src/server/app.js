@@ -83,11 +83,6 @@ class TechiesBot {
                             g.removeMemberRole(v.id, voterRole.id).catch(e => {
                                 return
                             });
-                            for (let u = 0; u < allRoles.length; u++) {
-                                g.removeMemberRole(v.id, allRoles[u].id).catch(e => {
-                                    return
-                                });
-                            }
                             let laterInterval = 750;
                             let laterPromise = Promise.resolve();
                             allRoles.forEach(r => {
