@@ -5,5 +5,6 @@
     "discordAdminIDs": ["author ID", "array"],
     "prefix": "prefix goes here",
     "authToken": "top.gg webhook authentication token",
-    "guildID": "id of guild"
+    "guildID": "id of guild",
+    "boosterRole": "id of booster role"
   }
