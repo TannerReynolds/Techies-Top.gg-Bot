@@ -78,6 +78,8 @@ class TechiesBot {
                         let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
                         if (differentDays > 3) {
                             let g = this.bot.guilds.filter(guild => guild.id === this.c.guildID)[0];
+                            let memRoles = g.members.get(v.id).roles;
+                            if(memRoles.includes(this.c.boosterRole)) return;
                             let voterRole = this.db.get('voterRole').value();
                             let allRoles = this.db.get('roles').value();
                             g.removeMemberRole(v.id, voterRole.id).catch(e => {
