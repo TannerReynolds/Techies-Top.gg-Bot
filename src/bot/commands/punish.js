@@ -24,10 +24,10 @@ module.exports = {
                 let promise = Promise.resolve();
                 roles.forEach(r => {
                     promise = promise.then(() => {
-                        msg.guild.removeMemberRole(uid, r.id).catch(e => {
+                        msg.channel.guild.removeMemberRole(uid, r.id).catch(e => {
                             return
                         });
-                        msg.guild.removeMemberRole(uid, _this.c.boosterRole).catch(e => {
+                        msg.channel.guild.removeMemberRole(uid, _this.c.boosterRole).catch(e => {
                             return
                         });
                         return new Promise(resolve => {

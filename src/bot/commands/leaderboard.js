@@ -14,6 +14,7 @@ module.exports = {
             authorTotal = existingVoter.total
         }
         console.log(authorTotal)
+        console.log(sortedVotes)
         for(let i = 0; i < sortedVotes.length; i++) {
             if(sortedVotes[i].id === msg.author.id) return authorPlace = i + 1;
         }
