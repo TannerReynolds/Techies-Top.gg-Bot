@@ -21,7 +21,7 @@ module.exports = {
         console.log(sortedVotes.length)
         let topTen = [];
         for(let u = 0; u < 9; u++) {
-            if(u <= sortedVotes.length){
+            if(u < sortedVotes.length){
             let userName = msg.channel.guild.members.get(sortedVotes[u].id).username;
             let discrim = msg.channel.guild.members.get(sortedVotes[u].id).discriminator;
             topTen.push(`#${u + 1} - ${userName}#${discrim} - ${sortedVotes[u].total} votes`); }
