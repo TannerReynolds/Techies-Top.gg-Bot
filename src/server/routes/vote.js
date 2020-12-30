@@ -4,6 +4,8 @@ async function vote(req, res) {
     if(givenAuth !== this.c.authToken || !givenUser) return;
 
     let currentVoter = this.db.get('voters').find({id: givenUser}).value();
+    let isBanned = this.db.get('bans').find({id: givenUser}).value();
+    if (isBanned) return;
     if(currentVoter) {
         this.db.get('voters').remove({id: givenUser}).write();
         this.db.get('voters').push({id: givenUser, date: currentDate()}).write();

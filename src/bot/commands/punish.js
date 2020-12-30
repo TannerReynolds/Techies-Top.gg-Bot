@@ -1,6 +1,6 @@
 module.exports = {
     command: 'punish',
-    description: 'Ban user from accessing voter roles',
+    description: 'Ban or unban user from accessing voter roles',
     syntax: '{PREFIX}punish [user]',
     execute: async (_this, msg, args) => {
         if(!args.join(' ')) return msg.channel.createMessage('No arguments were given');
@@ -19,6 +19,19 @@ module.exports = {
         } else {
             _this.db.get('bans').push({id: uid}).write();
             msg.channel.createMessage(`User ${uid} has been banned from using the color roles`);
+            let roles = _this.db.get('roles').value();
+                let interval = 750;
+                let promise = Promise.resolve();
+                roles.forEach(r => {
+                    promise = promise.then(() => {
+                        g.removeMemberRole(uid, r.id).catch(e => {
+                            return
+                        });
+                        return new Promise(resolve => {
+                            setTimeout(resolve, interval);
+                        });
+                    })
+                })
         }
     },
 };
