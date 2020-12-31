@@ -18,7 +18,7 @@ module.exports = {
         let targetRole = msg.channel.guild.roles.filter(r => r.name === args.join(" "))[0].id;
         _this.db.set('voterRole.id', targetRole).write();
         msg.channel.createMessage({ embed: {
-            description: `<a:Success:585821631495274499> Role ${targetRole} has become the voter role`,
+            description: `<a:Success:585821631495274499> Role \`${targetRole}\` has become the voter role`,
             color: 0x4ACC85
         }})
     },
