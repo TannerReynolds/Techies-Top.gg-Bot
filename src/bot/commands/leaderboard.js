@@ -16,7 +16,7 @@ module.exports = {
         console.log(authorTotal)
         console.log(sortedVotes)
         for(let i = 0; i < sortedVotes.length; i++) {
-            if(sortedVotes[i].id === msg.author.id) return authorPlace = i + 1;
+            if(sortedVotes[i].id === msg.author.id) authorPlace = i + 1;
         }
         console.log(sortedVotes.length)
         let topTen = [];
