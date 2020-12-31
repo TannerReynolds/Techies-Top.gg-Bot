@@ -5,8 +5,16 @@ module.exports = {
     execute: async (_this, msg) => {
         const cmds = [];
         _this.commands.map(cmd => {
-            cmds.push(`[${cmd.command}]: ${cmd.syntax.replace('{PREFIX}', _this.c.prefix)} | ${cmd.description.includes('{PREFIX}') ? cmd.description.replace('{PREFIX}', _this.c.prefix) : cmd.description}`);
+            cmds.push(`${cmd.command}: ${cmd.syntax.replace('{PREFIX}', _this.c.prefix)} | ${cmd.description.includes('{PREFIX}') ? cmd.description.replace('{PREFIX}', _this.c.prefix) : cmd.description}`);
         });
-        msg.channel.createMessage(`Here is a list of available commands\n\`\`\`ini\n${cmds.join('\n')}\n\`\`\``);
+        msg.channel.createMessage({ embed: {
+            title: 'Techies Hideaway',
+            field: {
+                name: "Available Commands",
+                value: cmds.join('\n'),
+                inline: false
+            },
+            color: 0x8A53FC
+        }})
     },
 };

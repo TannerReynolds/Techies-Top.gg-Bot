@@ -31,6 +31,20 @@ module.exports = {
                 }
             }
         }
-        msg.channel.createMessage(`**Top Ten Voters**\n\`\`\`\n${topTen.join("\n")}\n\n#${authorPlace} - ${msg.author.username}#${msg.author.discriminator} - ${authorTotal} votes\n\`\`\``)
+        let avi = 'https://cdn.tanners.space/mq8a'
+        if(msg.author.avatarURL) avi = msg.author.avatarURL;
+        msg.channel.createMessage({ embed: {
+            title: 'Techies Hideaway',
+            field: {
+                name: "Top Ten Voters",
+                value: topTen.join("\n"),
+                inline: false
+            },
+            author: {
+                icon_url: avi,
+                name: `#${authorPlace} - ${msg.author.username}#${msg.author.discriminator} - ${authorTotal} votes`
+            },
+            color: 0x8A53FC
+        }})
     },
 };
