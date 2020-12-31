@@ -35,11 +35,11 @@ module.exports = {
         if(msg.author.avatarURL) avi = msg.author.avatarURL;
         msg.channel.createMessage({ embed: {
             title: 'Techies Hideaway',
-            field: {
+            fields: [{
                 name: "Top Ten Voters",
                 value: topTen.join("\n"),
                 inline: false
-            },
+            }],
             author: {
                 icon_url: avi,
                 name: `#${authorPlace} - ${msg.author.username}#${msg.author.discriminator} - ${authorTotal} votes`

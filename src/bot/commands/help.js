@@ -9,11 +9,11 @@ module.exports = {
         });
         msg.channel.createMessage({ embed: {
             title: 'Techies Hideaway',
-            field: {
+            fields: [{
                 name: "Available Commands",
                 value: cmds.join('\n'),
                 inline: false
-            },
+            }],
             color: 0x8A53FC
         }})
     },
