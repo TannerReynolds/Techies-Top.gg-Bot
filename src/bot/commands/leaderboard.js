@@ -9,7 +9,7 @@ module.exports = {
         let existingVoter = _this.db.get('voterCount').find({id: msg.author.id}).value();
         let sortedVotes = aSort(existingVotes, 'total', {reverse: true});
         let authorTotal = 0;
-        let authorPlace = "Never Voted";
+        let authorPlace = "-- / Never Voted";
         if(existingVoter) {
             authorTotal = existingVoter.total
         }
