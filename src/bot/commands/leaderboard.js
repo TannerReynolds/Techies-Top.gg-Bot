@@ -24,9 +24,9 @@ module.exports = {
                 if(msg.channel.guild.members.get(sortedVotes[u].id)) {
                     userName = msg.channel.guild.members.get(sortedVotes[u].id).username;
                     discrim = msg.channel.guild.members.get(sortedVotes[u].id).discriminator;
-                    topTen.push(`#${u + 1} - ${userName}#${discrim} - ${sortedVotes[u].total} votes`);
+                    topTen.push(`#${u + 1} - **${userName}#${discrim}** - ${sortedVotes[u].total} votes`);
                 } else {
-                    userName = `Member Left: ${sortedVotes[u].id}`
+                    userName = `**Member Left: ${sortedVotes[u].id}**`
                     topTen.push(`#${u + 1} - ${userName} - ${sortedVotes[u].total} votes`);
                 }
             }
