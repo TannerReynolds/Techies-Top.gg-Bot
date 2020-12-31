@@ -23,9 +23,14 @@ module.exports = {
         for(let u = 0; u < 9; u++) {
             let userName;
             let discrim;
-            msg.channel.guild.members.get(sortedVotes[u].id).username ? userName = msg.channel.guild.members.get(sortedVotes[u].id).username : userName = `Member Left: ${sortedVotes[u].id}`
-            msg.channel.guild.members.get(sortedVotes[u].id).discriminator ? discrim = msg.channel.guild.members.get(sortedVotes[u].id).discriminator : discrim = ""
-            topTen.push(`#${u + 1} - ${userName}#${discrim} - ${sortedVotes[u].total} votes`);
+            if(msg.channel.guild.members.get(sortedVotes[u].id)) {
+                userName = msg.channel.guild.members.get(sortedVotes[u].id).username;
+                discrim = msg.channel.guild.members.get(sortedVotes[u].id).discriminator;
+                topTen.push(`#${u + 1} - ${userName}#${discrim} - ${sortedVotes[u].total} votes`);
+            } else {
+                userName = `Member Left: ${sortedVotes[u].id}`
+                topTen.push(`#${u + 1} - ${userName} - ${sortedVotes[u].total} votes`);
+            }
         }
         console.log(topTen.join(", "))
         msg.channel.createMessage(`**Top Ten Voters**\n\`\`\`\n${topTen.join("\n")}\n\n#${authorPlace} - ${msg.author.username}#${msg.author.discriminator} - ${authorTotal} votes\n\`\`\``)
