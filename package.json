@@ -4,7 +4,7 @@
   "description": "bot made for techies voters",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "eris": "^0.13.1",
+    "eris": "^0.14.0",
     "express": "^4.16.4",
     "fs-extra": "^9.0.0",
     "helmet": "^4.0.0",

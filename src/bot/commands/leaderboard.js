@@ -21,8 +21,10 @@ module.exports = {
         console.log(sortedVotes.length)
         let topTen = [];
         for(let u = 0; u < 9; u++) {
-            let userName = msg.channel.guild.members.get(sortedVotes[u].id).username;
-            let discrim = msg.channel.guild.members.get(sortedVotes[u].id).discriminator;
+            let userName;
+            let discrim;
+            msg.channel.guild.members.get(sortedVotes[u].id).username ? userName = msg.channel.guild.members.get(sortedVotes[u].id).username : userName = `Member Left: ${sortedVotes[u].id}`
+            msg.channel.guild.members.get(sortedVotes[u].id).discriminator ? discrim = msg.channel.guild.members.get(sortedVotes[u].id).discriminator : discrim = ""
             topTen.push(`#${u + 1} - ${userName}#${discrim} - ${sortedVotes[u].total} votes`);
         }
         console.log(topTen.join(", "))

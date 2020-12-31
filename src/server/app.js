@@ -118,6 +118,7 @@ class TechiesBot {
     async runDiscordBot() {
         this.bot = new Eris(this.c.discordToken, {
             maxShards: 'auto',
+            getAllUsers: true
         });
         this.log.verbose('Connecting to Discord...');
         this.commands = [];
