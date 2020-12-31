@@ -13,14 +13,11 @@ module.exports = {
         if(existingVoter) {
             authorTotal = existingVoter.total
         }
-        console.log(authorTotal)
-        console.log(sortedVotes)
         for(let i = 0; i < sortedVotes.length; i++) {
             if(sortedVotes[i].id === msg.author.id) authorPlace = i + 1;
         }
-        console.log(sortedVotes.length)
         let topTen = [];
-        for(let u = 0; u < 9; u++) {
+        for(let u = 0; u < 10; u++) {
             let userName;
             let discrim;
             if(u < sortedVotes.length) {
@@ -34,7 +31,6 @@ module.exports = {
                 }
             }
         }
-        console.log(topTen.join(", "))
         msg.channel.createMessage(`**Top Ten Voters**\n\`\`\`\n${topTen.join("\n")}\n\n#${authorPlace} - ${msg.author.username}#${msg.author.discriminator} - ${authorTotal} votes\n\`\`\``)
     },
 };
