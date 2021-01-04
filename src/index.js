@@ -66,5 +66,11 @@ process.on('SIGINT', async () => {
     process.exit();
 });
 
-process.on('unhandledRejection', async err => console.log(`\x1b[31mPRELOAD ERROR\n\n${err.stack}\x1b[0m`));
-process.on('uncaughtException', async err => console.log(`\x1b[31mPRELOAD ERROR\n\n${err.stack}\x1b[0m`));
+process.on('unhandledRejection', async err => {
+  if(err.stack.toLowerCase().includes('connection reset by peer')) return process.exit()
+  console.log(`\x1b[31mUNHANDLED ERROR\n\n${err.stack}\x1b[0m`)
+});
+process.on('uncaughtException', async err => {
+  if(err.stack.toLowerCase().includes('connection reset by peer')) return process.exit()
+  console.log(`\x1b[31mUNHANDLED ERROR\n\n${err.stack}\x1b[0m`)
+});

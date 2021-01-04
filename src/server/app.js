@@ -65,7 +65,8 @@ class TechiesBot {
         // Begin server
         this.startServer();
 
-            scheduler.scheduleJob('removeVoter', '0 0 * * *', () => {
+            scheduler.scheduleJob('removeVoter', '0 * * * *', () => {
+                this.log.verbose("Performing Voter Check");
             //setTimeout(() => {
                 let currentVoters = this.db.get('voters').value();
                 let interval = 750;
