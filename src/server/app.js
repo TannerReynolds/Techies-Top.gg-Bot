@@ -127,7 +127,11 @@ class TechiesBot {
         this.bot
             .on('messageCreate', events.messageCreate.bind(this))
             .on('ready', events.ready.bind(this));
+        try {
         this.bot.connect();
+        } catch(e) {
+        console.log(e)
+        }
     }
 
     /** Loads the commands for the discord bot to use in /bot/commands
